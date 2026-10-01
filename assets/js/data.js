@@ -67,13 +67,13 @@ export const baseState = {
     { id:'A8', task:'PT-48', employee:'u6', type:'employee', org:'fjordkraft' }
   ],
   resources: [
-    { id:'u2', kind:'Employee', name:'Sarah Nilsen', team:'Delivery', location:'Oslo', utilization:94, costRate:980, status:'Overloaded' },
-    { id:'u3', kind:'Employee', name:'David Hansen', team:'Automation', location:'Bergen', utilization:68, costRate:1040, status:'Available' },
-    { id:'u5', kind:'Employee', name:'Ola Berg', team:'Field', location:'Stavanger', utilization:91, costRate:930, status:'High load' },
-    { id:'u6', kind:'Employee', name:'Erik Lund', team:'Field', location:'Stavanger', utilization:59, costRate:910, status:'Available' },
-    { id:'eq-1', kind:'Equipment', name:'Thermal camera TC-8', team:'Field', location:'Oslo', utilization:72, costRate:650, status:'Allocated' },
-    { id:'eq-2', kind:'Equipment', name:'Protection test set PTS-4', team:'Delivery', location:'Oslo', utilization:83, costRate:1100, status:'Allocated' },
-    { id:'eq-3', kind:'Equipment', name:'PLC commissioning kit', team:'Automation', location:'Bergen', utilization:54, costRate:720, status:'Available' }
+    { id:'u2', org:'fjordkraft', kind:'Employee', name:'Sarah Nilsen', team:'Delivery', location:'Oslo', utilization:94, costRate:980, status:'Overloaded' },
+    { id:'u3', org:'fjordkraft', kind:'Employee', name:'David Hansen', team:'Automation', location:'Bergen', utilization:68, costRate:1040, status:'Available' },
+    { id:'u5', org:'fjordkraft', kind:'Employee', name:'Ola Berg', team:'Field', location:'Stavanger', utilization:91, costRate:930, status:'High load' },
+    { id:'u6', org:'fjordkraft', kind:'Employee', name:'Erik Lund', team:'Field', location:'Stavanger', utilization:59, costRate:910, status:'Available' },
+    { id:'eq-1', org:'fjordkraft', kind:'Equipment', name:'Thermal camera TC-8', team:'Field', location:'Oslo', utilization:72, costRate:650, status:'Allocated' },
+    { id:'eq-2', org:'fjordkraft', kind:'Equipment', name:'Protection test set PTS-4', team:'Delivery', location:'Oslo', utilization:83, costRate:1100, status:'Allocated' },
+    { id:'eq-3', org:'fjordkraft', kind:'Equipment', name:'PLC commissioning kit', team:'Automation', location:'Bergen', utilization:54, costRate:720, status:'Available' }
   ],
   maintenancePeriods: [
     { equipment:'eq-1', start:'2026-10-15T13:00', end:'2026-10-15T17:00', reason:'Calibration / maintenance window' }
@@ -98,9 +98,9 @@ export const baseState = {
   conflicts: [],
   recommendations: [],
   audit: [
-    { at:'2026-10-01 14:42', actor:'Kari Manager', action:'Created assignment', entity:'PT-41', detail:'Sarah Nilsen assigned to Protection relay testing' },
-    { at:'2026-10-01 14:28', actor:'Mina Solberg', action:'Updated project', entity:'p1', detail:'Oslo Grid Upgrade deadline confirmed for 14 Oct' },
-    { at:'2026-10-01 13:58', actor:'Kari Manager', action:'Approved recommendation', entity:'REC-9', detail:'Moved survey task by one day' }
+    { at:'2026-10-01 14:42', actor:'Kari Manager', org:'fjordkraft', action:'Created assignment', entity:'PT-41', detail:'Sarah Nilsen assigned to Protection relay testing' },
+    { at:'2026-10-01 14:28', actor:'Mina Solberg', org:'fjordkraft', action:'Updated project', entity:'p1', detail:'Oslo Grid Upgrade deadline confirmed for 14 Oct' },
+    { at:'2026-10-01 13:58', actor:'Kari Manager', org:'fjordkraft', action:'Approved recommendation', entity:'REC-9', detail:'Moved survey task by one day' }
   ],
   workPolicy: { weeklyTarget: 37.5, dailyAlert: 9, minimumDailyRest: 11, minimumWeeklyRest: 35 }
 };

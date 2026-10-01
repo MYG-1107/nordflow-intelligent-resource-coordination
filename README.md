@@ -51,6 +51,10 @@ For a production Norwegian deployment, connect the policy module to the employer
 └── .github/workflows/pages.yml
 ```
 
+## v1.1 quality fixes
+
+The current demo fixes the first-load modal overlay bug, preserves recommendation history, scopes resource/utilization/audit views to the selected organization, adds explicit recommendation application behavior, improves mobile navigation, adds keyboard-friendly modal handling, and covers the changes with automated checks. See `docs/qa-checklist.md`.
+
 ## GitHub Pages deployment
 
 1. Create or use a repository named `nordflow-intelligent-resource-coordination`.

@@ -56,13 +56,15 @@
         <div class="top-actions">
           <button class="ghost-button" id="resetDemo">Reset demo</button>
           <button class="primary-button" id="exportCsv">Export CSV</button>
-          <div class="user-chip"><span class="avatar">KM</span><span>Kari Manager</span></div>
+          <div class="user-chip"><span class="avatar" id="userAvatar">KM</span><span id="userName">Kari Manager</span></div>
         </div>
       </header>
 
       <section id="appView" class="view-wrap" aria-live="polite"></section>
     </main>
   </div>
+
+  <button class="sidebar-scrim" id="sidebarScrim" aria-label="Close navigation"></button>
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
   <div class="modal-backdrop" id="modalBackdrop" hidden>
