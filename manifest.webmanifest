@@ -1,0 +1,10 @@
+{
+  "name": "NordFlow — Work & Resource Coordination",
+  "short_name": "NordFlow",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f4f7fb",
+  "theme_color": "#0f172a",
+  "description": "Norway-focused resource coordination demo for teams managing projects, people, equipment and capacity.",
+  "icons": [{"src":"assets/favicon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]
+}

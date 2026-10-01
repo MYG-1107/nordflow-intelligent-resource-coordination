@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="NordFlow is a Norway-focused resource coordination workspace for teams managing people, projects, equipment, schedules and capacity.">
+  <meta name="theme-color" content="#0f172a">
+  <title>NordFlow — Work & Resource Coordination</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="assets/css/app.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand-row">
+        <div class="brand-mark" aria-hidden="true">N</div>
+        <div>
+          <div class="brand-name">NordFlow</div>
+          <div class="brand-sub">Resource coordination</div>
+        </div>
+      </div>
+
+      <div class="org-switcher">
+        <div class="eyebrow">Workspace</div>
+        <select id="orgSelect" aria-label="Select organization"></select>
+      </div>
+
+      <nav class="nav" aria-label="Primary navigation">
+        <button class="nav-item active" data-view="dashboard"><span>⌂</span> Dashboard</button>
+        <button class="nav-item" data-view="planner"><span>◫</span> Planner</button>
+        <button class="nav-item" data-view="projects"><span>▦</span> Projects</button>
+        <button class="nav-item" data-view="resources"><span>◉</span> Resources</button>
+        <button class="nav-item" data-view="conflicts"><span>!</span> Conflicts <b id="navConflictCount">0</b></button>
+        <button class="nav-item" data-view="recommendations"><span>✦</span> Recommendations <b id="navRecommendationCount">0</b></button>
+        <button class="nav-item" data-view="reports"><span>▤</span> Reports</button>
+        <button class="nav-item" data-view="audit"><span>◌</span> Audit trail</button>
+      </nav>
+
+      <div class="sidebar-card">
+        <div class="sidebar-card-title">Norway operations</div>
+        <p>Configure work-hour policies, site coverage and resource rules for each organization.</p>
+        <button class="text-button" data-view="settings">Open settings →</button>
+      </div>
+
+      <div class="sidebar-foot">Portfolio demo · v1.0</div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <button class="icon-button mobile-only" id="mobileMenu" aria-label="Open navigation">☰</button>
+        <div>
+          <div class="breadcrumb">Operations / <span id="currentViewLabel">Dashboard</span></div>
+          <h1 id="pageTitle">NordFlow workspace</h1>
+        </div>
+        <div class="top-actions">
+          <button class="ghost-button" id="resetDemo">Reset demo</button>
+          <button class="primary-button" id="exportCsv">Export CSV</button>
+          <div class="user-chip"><span class="avatar">KM</span><span>Kari Manager</span></div>
+        </div>
+      </header>
+
+      <section id="appView" class="view-wrap" aria-live="polite"></section>
+    </main>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <div class="modal-backdrop" id="modalBackdrop" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-head">
+        <div>
+          <div class="eyebrow" id="modalEyebrow">Recommendation</div>
+          <h2 id="modalTitle">Confirm change</h2>
+        </div>
+        <button class="icon-button" id="closeModal" aria-label="Close">×</button>
+      </div>
+      <div id="modalBody"></div>
+      <div class="modal-actions" id="modalActions"></div>
+    </div>
+  </div>
+
+  <script type="module" src="assets/js/app.js"></script>
+</body>
+</html>

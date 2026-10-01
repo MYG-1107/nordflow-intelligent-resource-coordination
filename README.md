@@ -1,114 +1,95 @@
 # NordFlow — Intelligent Work & Resource Coordination Platform
 
-NordFlow is a production-oriented multi-tenant SaaS portfolio project for coordinating people, equipment, locations, project schedules, budgets, and operational capacity. Its differentiating capability is a deterministic conflict engine that detects operational risk and an explainable recommendation engine that proposes changes without applying them automatically.
+NordFlow is a Norway-focused B2B operations workspace designed to help small and mid-sized teams coordinate employees, projects, equipment, locations, schedules, budgets and delivery capacity.
 
-## What this demonstrates
+This repository is intentionally **GitHub Pages ready**. The deployed demo is a browser-only product simulation with real deterministic conflict detection, recommendation generation, local persistence, audit history and CSV reporting.
 
-- Next.js 16 + TypeScript + React + Tailwind CSS 4
-- NestJS 11 REST API with OpenAPI
-- PostgreSQL + Prisma ORM 7
-- Redis + BullMQ background processing
-- Secure cookie-based authentication with rotating sessions
-- Tenant isolation and RBAC
-- Deterministic conflict detection
-- Explainable, approval-gated recommendations
-- Server-Sent Events for authorized real-time updates
-- Audit logging and request correlation IDs
-- CSV reporting and dashboard analytics
-- Unit, integration, security, and browser E2E test scaffolding
-- Docker + GitHub Actions
+> Production boundary: GitHub Pages can host the interface, but it does not provide the API/database/queue/authentication infrastructure required by a true multi-tenant SaaS. The `/docs` folder contains the production architecture blueprint for the full-stack version described in the project brief.
 
-## Local setup
+## What the demo demonstrates
 
-1. Copy `.env.example` to `.env`.
-2. Start infrastructure: `docker compose up -d postgres redis`.
-3. Install dependencies: `npm install`.
-4. Generate Prisma Client: `npm run db:generate`.
-5. Apply migrations: `npm run db:migrate`.
-6. Seed the demo data: `npm run db:seed`.
-7. Start API and web: `npm run dev`.
+- Multi-organization workspace switching.
+- Resource and project planning for Norwegian locations.
+- Deterministic conflict detection: schedule overlap, skill gap, availability, equipment double-booking, deadline risk, budget warning and resource over-utilization.
+- Explainable recommendations with human approval/rejection.
+- Audit trail for important changes.
+- Utilization and cost reporting with CSV export.
+- Responsive B2B SaaS UI designed for desktop and mobile.
+- Local browser persistence via `localStorage` for demo continuity.
+- GitHub Actions deployment to GitHub Pages.
 
-Web: http://localhost:3000  
-API: http://localhost:4000  
-Swagger: http://localhost:4000/docs
+## Norway focus
 
-## Demo account
+The sample organizations and operational locations use Oslo, Bergen, Stavanger, Trondheim, Bodø and Tromsø. Currency is shown in NOK. Working-hour policy is configurable in the UI rather than hard-coded as a legal compliance decision.
 
-Owner: `owner@northstar.demo`  
-Password: `NordFlow!2026`
+For a production Norwegian deployment, connect the policy module to the employer's actual employment agreements, collective agreements and applicable requirements; do not treat demo defaults as legal advice.
 
-Two additional demo tenants are seeded so cross-tenant isolation can be tested.
+## Repository structure
 
-## Architecture
-
-```mermaid
-flowchart LR
-  Browser[Next.js Web] -->|HTTPS + HttpOnly cookies| API[NestJS API]
-  API --> PG[(PostgreSQL)]
-  API --> Redis[(Redis)]
-  Worker[BullMQ Worker] --> Redis
-  Worker --> PG
-  API -->|SSE| Browser
-  API --> Audit[(Immutable Audit Log)]
+```text
+.
+├── index.html
+├── manifest.webmanifest
+├── robots.txt
+├── .nojekyll
+├── assets/
+│   ├── css/app.css
+│   ├── js/app.js
+│   ├── js/data.js
+│   ├── js/engine.js
+│   ├── js/reports.js
+│   └── favicon.svg
+├── docs/
+│   ├── production-architecture.md
+│   ├── data-model.md
+│   ├── security-model.md
+│   ├── conflict-engine.md
+│   ├── recommendation-engine.md
+│   └── github-pages.md
+├── tests/
+│   └── engine.test.mjs
+└── .github/workflows/pages.yml
 ```
 
-The API is intentionally modular rather than split into microservices. The conflict engine is a pure domain service, while persistence, HTTP, queues, and real-time delivery remain infrastructure boundaries around it.
+## GitHub Pages deployment
 
-## Domain model
+1. Create or use a repository named `nordflow-intelligent-resource-coordination`.
+2. Drag the contents of this ZIP into the repository root and commit to `main`.
+3. In **Settings → Pages**, select **GitHub Actions** as the source.
+4. Push to `main`. The included workflow validates the JavaScript and deploys the repository as a static Pages site.
+5. Your project site will follow the normal project-pages pattern: `https://MYG-1107.github.io/nordflow-intelligent-resource-coordination/`.
 
-Organization → memberships → users/roles/permissions.  
-Projects contain tasks. Tasks receive resource assignments. Employee resources link to employee profiles, skills, availability, work-hour policies, and locations. Equipment resources link to equipment and maintenance windows. Budgets and cost entries feed financial risk rules. Conflicts reference the affected projects/resources and generate approval-gated recommendations.
+## Local run
 
-See `docs/domain.md` and `docs/diagrams/er.mmd`.
+Because this uses ES modules, serve it with a small local web server rather than opening `index.html` directly.
 
-## Security model
+```bash
+python -m http.server 8080
+```
 
-Every protected request resolves a user membership and organization from the signed access token. Tenant-scoped services require the organization ID before querying tenant-owned entities. Controllers never expose Prisma entities directly. Validation pipes, secure headers, request correlation IDs, rate limiting, CSRF double-submit protection, bcrypt password hashing, rotating refresh sessions, and audit logging are included.
+Then open `http://localhost:8080`.
 
-See `docs/security.md`.
+## Demo behavior
 
-Validation notes are in `docs/validation.md`.
+The demo starts with intentionally interesting operational conditions. You can switch organizations, inspect conflicts, review recommendations, approve/reject recommendations, create a demo project and export reports. Use **Reset demo** to restore the initial dataset.
 
-## Conflict engine
+## Production architecture target
 
-The deterministic engine evaluates:
+The project brief calls for Next.js + TypeScript on the frontend, NestJS + REST/WebSockets on the backend, PostgreSQL + Prisma, Redis + a queue such as BullMQ, secure authentication, RBAC, tenant isolation, observability, automated testing, Docker and CI/CD. The architecture documents in this repository preserve that target while keeping the public GitHub Pages demo lightweight.
 
-1. employee overlap
-2. equipment overlap
-3. skill/certification gaps
-4. availability violations
-5. working-hour violations
-6. location conflicts
-7. deadline risks
-8. resource over-utilization
-9. budget warnings
-10. maintenance conflicts
+## Portfolio positioning
 
-Each finding stores a fingerprint, severity, explanation, affected entities, detection time, and status. Recommendations are generated from the finding context, stored, and only applied after an explicit user approval.
+This project is intended to demonstrate:
 
-See `docs/conflict-engine.md`.
+- domain modelling rather than CRUD-only screens
+- deterministic business rules
+- explainable decision support
+- multi-tenant authorization design
+- database and API boundaries
+- asynchronous processing strategy
+- real-time event design
+- security testing strategy
+- performance considerations
+- deployment automation
 
-## Performance decisions
-
-- Composite indexes put `organizationId` first for tenant filtering.
-- Assignment queries index resource/time windows for overlap detection.
-- Transactional writes use optimistic version fields where concurrent edits are possible.
-- Conflict detection is queue-backed so mutation requests do not wait for organization-wide scans.
-- Dashboard/reporting endpoints aggregate on indexed columns and paginate audit/activity feeds.
-- React Query deduplicates client fetches and uses targeted invalidation.
-
-See `docs/performance.md`.
-
-## Production deployment
-
-A pragmatic small-team deployment is a managed PostgreSQL instance, managed Redis, one containerized API, one containerized Next.js web service, and a worker process. TLS terminates at the edge, secrets stay in the platform's secret manager, database backups are enabled, migrations run as a release step, and application logs include correlation IDs.
-
-See `docs/deployment.md`.
-
-## Portfolio presentation
-
-The repository also contains a technical case study, interview discussion guide, architecture trade-offs, security trade-offs, database decisions, and a resume/LinkedIn draft in `docs/portfolio/`.
-
-## Limitations called out honestly
-
-This starter is production-oriented but still portfolio-sized: email delivery is an adapter boundary rather than a configured provider, SSE events are fanned out through Redis pub/sub between API and worker processes, while short replay history is kept per API process, and observability integrations are represented through structured logs and metrics hooks rather than a hosted vendor lock-in. These are deliberate trade-offs, not hidden claims of enterprise completeness.
+Do not claim the GitHub Pages demo itself is production-ready. The full production system requires a server-side trust boundary and persistent infrastructure.
