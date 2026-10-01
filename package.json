@@ -1,0 +1,29 @@
+{
+  "name": "nordflow",
+  "private": true,
+  "version": "1.0.0",
+  "description": "NordFlow \u2014 Intelligent Work & Resource Coordination Platform",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "concurrently -k \"npm run dev --workspace=@nordflow/api\" \"npm run dev --workspace=@nordflow/web\"",
+    "build": "npm run build --workspace=@nordflow/api && npm run build --workspace=@nordflow/web",
+    "lint": "npm run lint --workspace=@nordflow/api && npm run lint --workspace=@nordflow/web",
+    "typecheck": "npm run typecheck --workspace=@nordflow/api && npm run typecheck --workspace=@nordflow/web",
+    "test": "npm run test:unit --workspace=@nordflow/api",
+    "test:integration": "npm run test:integration --workspace=@nordflow/api",
+    "test:e2e": "npm run test:e2e --workspace=@nordflow/web",
+    "db:generate": "npm run db:generate --workspace=@nordflow/api",
+    "db:migrate": "npm run db:migrate --workspace=@nordflow/api",
+    "db:seed": "npm run db:seed --workspace=@nordflow/api",
+    "worker": "npm run worker --workspace=@nordflow/api"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}

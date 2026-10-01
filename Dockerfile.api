@@ -1,0 +1,19 @@
+FROM node:22-alpine AS base
+WORKDIR /app
+COPY package*.json ./
+COPY apps/api/package*.json apps/api/
+RUN npm install
+COPY . .
+RUN npm run db:generate --workspace=@nordflow/api
+RUN npm run build --workspace=@nordflow/api
+
+FROM node:22-alpine AS runner
+WORKDIR /app
+ENV NODE_ENV=production
+COPY --from=base /app/package*.json ./
+COPY --from=base /app/apps/api/package*.json ./apps/api/
+COPY --from=base /app/node_modules ./node_modules
+COPY --from=base /app/apps/api/dist ./apps/api/dist
+COPY --from=base /app/apps/api/prisma ./apps/api/prisma
+EXPOSE 4000
+CMD ["node", "apps/api/dist/main.js"]
